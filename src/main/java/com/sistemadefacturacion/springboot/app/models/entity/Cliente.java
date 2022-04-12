@@ -8,10 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "clientes")
@@ -20,22 +25,32 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
+	@NotEmpty
+	@Size(min = 2, max = 50)
 	private String nombre;
+
+	@NotEmpty
+	@Size(min = 2, max = 50)
 	private String apellido;
+
+	@NotEmpty
+	@Email
 	private String email;
 
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull
 	private Date createAt;
-
-	@PrePersist
-	public void prePersist() {
-		this.createAt = new Date();
-	}
-	
+//
+//	@PrePersist
+//	public void prePersist() {
+//		this.createAt = new Date();
+//	}
+//	
 	public Long getId() {
 		return id;
 	}
