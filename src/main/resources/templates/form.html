@@ -31,6 +31,12 @@
 	</nav>
 	<div class="container">
 		<h1 class="text-secondary border-bottom border-success" th:text="${titulo}"></h1>
+		<div th:object="${cliente}" th:remove="tag">
+			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+				<li th:each="err : ${#fields.errors('*')}" th:text="${err}">
+				</li>
+			</ul>
+		</div>
 		<form th:action="@{/form}" th:object="${cliente}" method="post">
 			<div class="form-group row mt-2">
 				<label class="form-label col-sm-2">Nombre</label>
@@ -65,7 +71,7 @@
 					<input type="submit" value="Crear cliente" class="btn btn-primary"/>
 				</div>
 			</div>
-				<input type="hidden" th:field="*{id}"/>
+				<!-- <input type="hidden" th:field="*{id}"/> Se está usando sessionattribute para guardar el objeto en session, no es necesario el input hidden del ID -->
 		</form>
 	</div>
 <script
