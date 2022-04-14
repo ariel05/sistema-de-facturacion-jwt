@@ -16,7 +16,7 @@
 						</li>
 					</ul>
 				</div>
-				<form th:action="@{/form}" th:object="${cliente}" method="post">
+				<form th:action="@{/form}" th:object="${cliente}" method="post" enctype="multipart/form-data">
 					<div class="form-group row mt-2">
 						<label class="form-label col-sm-2">Nombre</label>
 						<div class="col-sm-6">
