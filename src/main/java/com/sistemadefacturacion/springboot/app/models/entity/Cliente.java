@@ -32,7 +32,7 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotEmpty
 	@Size(min = 2, max = 50)
 	private String nombre;
@@ -50,7 +50,7 @@ public class Cliente implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull
 	private Date createAt;
-	
+
 	private String foto;
 //
 //	@PrePersist
@@ -60,11 +60,11 @@ public class Cliente implements Serializable {
 //	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
 	private List<Factura> facturas;
-	
+
 	public Cliente() {
 		facturas = new ArrayList<Factura>();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -124,7 +124,7 @@ public class Cliente implements Serializable {
 	public void setFacturas(List<Factura> facturas) {
 		this.facturas = facturas;
 	}
-	
+
 	public void addFacturas(Factura factura) {
 		this.facturas.add(factura);
 	}

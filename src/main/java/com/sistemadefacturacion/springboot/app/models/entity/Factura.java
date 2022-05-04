@@ -21,64 +21,73 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="facturas")
-public class Factura implements Serializable{
+@Table(name = "facturas")
+public class Factura implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String descripcion; 
+	private String descripcion;
 	private String observacion;
-	
+
 	@Temporal(TemporalType.DATE)
-	@Column(name="create_at")
+	@Column(name = "create_at")
 	private Date createAt;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="factura_id")
+	@JoinColumn(name = "factura_id")
 	private List<ItemFactura> item;
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
 	}
-	
+
 	public Factura() {
 		this.item = new ArrayList<ItemFactura>();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
 	public String getObservacion() {
 		return observacion;
 	}
+
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
 	}
+
 	public Date getCreateAt() {
 		return createAt;
 	}
+
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
+
 	public Cliente getCliente() {
 		return cliente;
 	}
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
@@ -90,8 +99,20 @@ public class Factura implements Serializable{
 	public void setItem(List<ItemFactura> item) {
 		this.item = item;
 	}
-	
+
 	public void addItemFactura(ItemFactura item) {
 		this.item.add(item);
+	}
+	
+	public Double getTotal() {
+		Double total = 0.0;
+		
+		int size = item.size();
+		
+		for(int i= 0; i < size; i++) {
+			total += item.get(i).calcularImporte();
+		}
+		
+		return total;
 	}
 }
