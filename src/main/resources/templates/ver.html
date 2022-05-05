@@ -9,9 +9,12 @@
 		<div class="card bg-light">
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body row">
+				<h4 class="card-title">
+					<a th:href="@{'/factura/form/' + ${cliente.id}}"  class="btn btn-success btn-xs" th:text="'Crear Factura'"></a>
+				</h4>			
+			
 				<div class="col-sm-4" th:if="${#strings.length(cliente.foto) > 0}">
-					<img th:alt="${cliente.foto}"
-						th:src="@{'/uploads/' + ${cliente.foto}}" class="img-thumbnail">
+					<img th:alt="${cliente.foto}" th:src="@{'/uploads/' + ${cliente.foto}}" class="img-thumbnail">
 				</div>
 				<div class="col-sm-8">
 					<ul class="list-group">
