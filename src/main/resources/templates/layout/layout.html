@@ -3,6 +3,7 @@
 <head th:fragment="head">
 <meta charset="UTF-8"/>
 <title th:text="'Spring Boot: MVC + Thymeleaf + Data JPA - ' + ${titulo}"></title>
+	<link th:href="@{/css/jquery-ui.min.css}" rel="stylesheet"/>
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <body>
@@ -44,7 +45,9 @@
 		Spring Tool), alumno Ariel Rivero.<br /> &copy; Company 2017,
 		Inc. Todos los derechos reservados. Términos de uso y privacidad.<br />
 	</p>
+	<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/jquery-ui.min.js}"></script>
 </footer>
 </body>
 </html>
