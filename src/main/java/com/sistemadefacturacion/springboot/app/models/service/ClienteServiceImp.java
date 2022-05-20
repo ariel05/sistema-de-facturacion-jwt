@@ -55,8 +55,9 @@ public class ClienteServiceImp implements IClienteService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Producto> findByNombre(String term) {
-//		return productoDao.buscarPorNombre(term);
-		return productoDao.findByNombreLikeIgnoreCase("%"+term+"%");
+		return productoDao.buscarPorNombre(term);
+		//Hibernate 5.6.7 da problemas con esta consulta
+//		return productoDao.findByNombreLikeIgnoreCase("%"+term+"%");
 	}
 
 }
