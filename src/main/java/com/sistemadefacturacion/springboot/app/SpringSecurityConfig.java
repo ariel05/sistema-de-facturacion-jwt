@@ -11,9 +11,14 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.sistemadefacturacion.springboot.app.auth.handler.LoginSuccessHandler;
+
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 
+	@Autowired
+	private LoginSuccessHandler successHandler;
+	
 	@Bean
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -41,9 +46,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/eliminar/**").hasAnyRole("ADMIN")
 		.antMatchers("/factura/**").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
-		.and().formLogin().loginPage("/login").permitAll()
-		.and().logout().permitAll()
-		.and().exceptionHandling().accessDeniedPage("/error_403");
+		.and()
+			.formLogin()
+			.successHandler(successHandler)
+			.loginPage("/login")
+			.permitAll()
+		.and()
+			.logout()
+			.permitAll()
+		.and()
+			.exceptionHandling()
+			.accessDeniedPage("/error_403");
 	}
 	
 	
