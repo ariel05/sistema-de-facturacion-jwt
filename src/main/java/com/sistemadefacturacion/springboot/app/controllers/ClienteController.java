@@ -106,14 +106,14 @@ public class ClienteController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		if(auth != null) {
-			logger.info("Usuario autenticado (obtenido de forma estática), username: ".concat(authentication.getName()));
+			logger.info("Usuario autenticado (obtenido de forma estática), username: ".concat(auth.getName()));
 		}
 		
 		if(hasRole("ROLE_ADMIN")) {
 			logger.info("El usuario: ".concat(authentication.getName()).concat(" tiene acceso"));
 		}
 		else {
-			logger.info("El usuario: ".concat(authentication.getName()).concat(" NO tiene acceso"));
+			logger.info("El usuario: ".concat(auth.getName()).concat(" NO tiene acceso"));
 		}
 		
 		SecurityContextHolderAwareRequestWrapper securityContext = new SecurityContextHolderAwareRequestWrapper(request, "");
@@ -122,7 +122,7 @@ public class ClienteController {
 			logger.info("El usuario: ".concat(authentication.getName()).concat(" tiene acceso | Usando SecurityContextHolderAwareRequestWrapper"));
 		}
 		else {
-			logger.info("El usuario: ".concat(authentication.getName()).concat(" NO tiene acceso | Usando SecurityContextHolderAwareRequestWrapper"));
+			logger.info("El usuario: ".concat(auth.getName()).concat(" NO tiene acceso | Usando SecurityContextHolderAwareRequestWrapper"));
 		}
 		
 		
@@ -130,7 +130,7 @@ public class ClienteController {
 			logger.info("El usuario: ".concat(authentication.getName()).concat(" tiene acceso | Usando HttpServletRequest"));
 		}
 		else {
-			logger.info("El usuario: ".concat(authentication.getName()).concat(" NO tiene acceso | Usando HttpServletRequest"));
+			logger.info("El usuario: ".concat(auth.getName()).concat(" NO tiene acceso | Usando HttpServletRequest"));
 		}
 		
 		Pageable pageable = PageRequest.of(page, 5);
