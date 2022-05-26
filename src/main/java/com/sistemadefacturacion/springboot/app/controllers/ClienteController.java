@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -56,6 +58,9 @@ import com.sistemadefacturacion.springboot.app.util.paginator.PageRender;
 public class ClienteController {
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
+	
+	@Autowired
+	private MessageSource messageSource;
 
 	@Autowired
 	@Qualifier("clienteService")
@@ -97,7 +102,8 @@ public class ClienteController {
 	}
 	
 	@RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
-	public String listar(@RequestParam(name="page", defaultValue = "0") int page, Model model, Authentication authentication, HttpServletRequest request) {
+	public String listar(@RequestParam(name="page", defaultValue = "0") int page, Model model,
+			Authentication authentication, HttpServletRequest request, Locale locale) {
 		
 		if(authentication != null) {
 			logger.info("Usuario autenticado, username: ".concat(authentication.getName()));
@@ -137,7 +143,7 @@ public class ClienteController {
 		Page<Cliente> clientes = clienteService.findAll(pageable);
 		PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
 		
-		model.addAttribute("titulo", "Listado de clientes");
+		model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
 		model.addAttribute("clientes", clientes);
 		model.addAttribute("page", pageRender);
 		return "listar";

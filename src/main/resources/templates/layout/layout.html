@@ -25,10 +25,10 @@
 					</li>
 				</ul>
 				<ul class="navbar-nav ms-auto">
-					<li sec:authorize="!isAuthenticated()">
+					<li sec:authorize="!isAuthenticated()" class="mx-4">
 						<a th:href="@{/login}" class="btn btn-outline-primary">Sign in</a>
 					</li>
-					<li class="dropdown" sec:authorize="isAuthenticated()">
+					<li class="dropdown mx-4" sec:authorize="isAuthenticated()">
 					  <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 					    <span sec:authentication="name"></span>
 					  </a>
@@ -42,7 +42,11 @@
 					  	</form>
 					  </div>
 					</li>
+					<li class="nav-item mx-1"><a th:href="@{/locale(lang=es_ES)}" class="btn btn-outline-success">ES</a> </li>
+					<li class="nav-item mx-1"><a th:href="@{/locale(lang=en_EN)}" class="btn btn-outline-success">EN</a> </li>
+					<li class="nav-item mx-1"><a th:href="@{/locale(lang=de_DE)}" class="btn btn-outline-success">DE</a> </li>
 				</ul>
+				
 			</div>
 		</div>
 	</nav>
