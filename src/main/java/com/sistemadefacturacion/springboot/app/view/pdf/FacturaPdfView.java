@@ -22,6 +22,13 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.sistemadefacturacion.springboot.app.models.entity.Factura;
 import com.sistemadefacturacion.springboot.app.models.entity.ItemFactura;
 
+//Fuente
+//https://itextpdf.com/en/resources/examples
+//https://kb.itextpdf.com/home/it5kb/examples/page-orientation-and-rotation
+//https://kb.itextpdf.com/home/search?q=Page%20orientation%20and%20rotation&max=500&s=IT5KB
+//https://stackoverflow.com/questions/17274618/itext-landscape-orientation-and-positioning
+
+
 @Component("factura/ver")
 public class FacturaPdfView extends AbstractPdfView	{
 
