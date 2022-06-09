@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "facturas_items")
 public class ItemFactura implements Serializable {
@@ -23,6 +25,8 @@ public class ItemFactura implements Serializable {
 	private Integer cantidad;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "producto_id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+	//Al ser de carga Lazy en itemFactura, va a dar error al traer los elementos del producto y el handler (por ser un proxy), por eso uso @JsonIgnoreProperties
 	private Producto producto;
 
 	public Long getId() {

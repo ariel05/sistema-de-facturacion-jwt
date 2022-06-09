@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "facturas")
 public class Factura implements Serializable {
@@ -88,6 +90,7 @@ public class Factura implements Serializable {
 	}
 
 	@XmlTransient //Omite este atributo en la Serialización, no lo incluye en el XML
+	@JsonBackReference
 	public Cliente getCliente() {
 		return cliente;
 	}

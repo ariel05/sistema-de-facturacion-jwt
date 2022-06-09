@@ -23,7 +23,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "clientes")
@@ -51,6 +52,7 @@ public class Cliente implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createAt;
 
 	private String foto;
@@ -61,7 +63,8 @@ public class Cliente implements Serializable {
 //	}
 //	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
-	@JsonIgnore //No necesito las facturas en la exportación Json, solo los clientes
+	//@JsonIgnore //Si no necesito las facturas en la exportación Json, solo los clientes, puedo agregar @JsonIgnore
+	@JsonManagedReference //En cambio si quiero las facturas, para evitar el loop infinito entre cliente y factura, uso @JsonManagedReference y @JsonBackReference en factura
 	private List<Factura> facturas;
 
 	public Cliente() {
