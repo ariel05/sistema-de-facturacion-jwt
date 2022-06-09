@@ -23,6 +23,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable {
@@ -59,6 +61,7 @@ public class Cliente implements Serializable {
 //	}
 //	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
+	@JsonIgnore //No necesito las facturas en la exportación Json, solo los clientes
 	private List<Factura> facturas;
 
 	public Cliente() {
