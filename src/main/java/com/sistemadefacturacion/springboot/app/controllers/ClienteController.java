@@ -96,15 +96,6 @@ public class ClienteController {
 		return "ver";
 	}
 	
-	@GetMapping(value = "/listar-rest")
-	@ResponseBody
-	public ClienteList listarRest() {
-		//Si quiero usar solo json, así está bien
-		//return clienteService.findAll();
-		
-		//Pero si quiero usar json y XML, tengo que cambiar a ClienteList 
-		return new ClienteList(clienteService.findAll());
-	}
 	@RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
 	public String listar(@RequestParam(name="page", defaultValue = "0") int page, Model model,
 			Authentication authentication, HttpServletRequest request, Locale locale) {
