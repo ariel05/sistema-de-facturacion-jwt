@@ -56,7 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/eliminar/**").hasAnyRole("ADMIN")
 		.antMatchers("/factura/**").hasAnyRole("ADMIN")*/
 		.anyRequest().authenticated()
-		.and()
+		/*.and()
 			.formLogin()
 			.successHandler(successHandler)
 			.loginPage("/login")
@@ -66,7 +66,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 			.permitAll()
 		.and()
 			.exceptionHandling()
-			.accessDeniedPage("/error_403")
+			.accessDeniedPage("/error_403")*/
 		.and()
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
