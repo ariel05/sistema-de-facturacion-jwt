@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.sistemadefacturacion.springboot.app.auth.filter.JWTAuthenticationFilter;
 import com.sistemadefacturacion.springboot.app.auth.handler.LoginSuccessHandler;
 import com.sistemadefacturacion.springboot.app.models.service.JpaUserDetailsService;
 
@@ -31,30 +32,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		builder.userDetailsService(userDetailService)
 		.passwordEncoder(passwordEncoder);
 
-		
-//		builder.jdbcAuthentication().dataSource(datasource)
-//		.passwordEncoder(passwordEncoder)
-//		.usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
-//		.authoritiesByUsernameQuery("SELECT u.username, a.authority FROM authorities a JOIN users u ON (a.user_id=u.id) WHERE u.username=?");
-		
-//		PasswordEncoder encoder = this.passwordEncoder;
-//		
-////		UserBuilder users = User.builder().passwordEncoder(password ->  encoder.encode(password));
-//		UserBuilder users = User.builder().passwordEncoder(encoder::encode);
-//		
-//		builder.inMemoryAuthentication()
-//		.withUser(users.username("admin").password("12345").roles("ADMIN", "USER"))
-//		.withUser(users.username("ariel").password("12345").roles("USER"));
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/img/**", "/listar", "/locale", "/api/clientes/**").permitAll()
-		/*.antMatchers("/ver/**").hasAnyRole("USER")
-		.antMatchers("/uploads/**").hasAnyRole("USER")
-		.antMatchers("/form/**").hasAnyRole("ADMIN")
-		.antMatchers("/eliminar/**").hasAnyRole("ADMIN")
-		.antMatchers("/factura/**").hasAnyRole("ADMIN")*/
+		http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/img/**", "/listar", "/locale").permitAll()
 		.anyRequest().authenticated()
 		/*.and()
 			.formLogin()
@@ -68,6 +50,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 			.exceptionHandling()
 			.accessDeniedPage("/error_403")*/
 		.and()
+		.addFilter(new JWTAuthenticationFilter(authenticationManager()))
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
