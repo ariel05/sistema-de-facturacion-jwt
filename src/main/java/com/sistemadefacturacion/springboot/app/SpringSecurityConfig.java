@@ -10,21 +10,25 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.sistemadefacturacion.springboot.app.auth.filter.JWTAuthenticationFilter;
-import com.sistemadefacturacion.springboot.app.auth.handler.LoginSuccessHandler;
+import com.sistemadefacturacion.springboot.app.auth.filter.JWTAuthorizationFilter;
+import com.sistemadefacturacion.springboot.app.auth.service.JWTService;
 import com.sistemadefacturacion.springboot.app.models.service.JpaUserDetailsService;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 
-	@Autowired
-	private LoginSuccessHandler successHandler;
+//	@Autowired
+//	private LoginSuccessHandler successHandler;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private JpaUserDetailsService userDetailService;
+	
+	@Autowired
+	private JWTService jwtService;
 	
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception{
@@ -50,7 +54,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 			.exceptionHandling()
 			.accessDeniedPage("/error_403")*/
 		.and()
-		.addFilter(new JWTAuthenticationFilter(authenticationManager()))
+		.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtService))
+		.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtService))
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
